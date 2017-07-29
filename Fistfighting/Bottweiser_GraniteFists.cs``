@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+
+namespace XRL.World.Parts.Mutation
+{
+  [Serializable]
+  public class Bottweiser_GraniteFists : BaseMutation
+  {
+    public Bottweiser_GraniteFists()
+    {
+      this.Name = "Bottweiser_GraniteFists";
+      this.DisplayName = "Granite Fists";
+    }
+
+	public override bool CanLevel()
+	{
+	  return true;
+	}
+	
+    public override void Register(GameObject Object)
+    {
+    }
+
+    public override string GetDescription()
+    {
+      return "Your fists are hardened granite. You can block attacks and disarm enemies with your fists, and attacks you make with your fists do extra damage. \n\nYou can't wear gloves.";
+    }
+
+    public override string GetLevelText(int Level)
+    {
+	  return (1 * Level).ToString() + " extra base damage with fist attacks";
+      //return "";
+    }
+
+    public override bool Mutate(GameObject GO, int Level)
+    {
+      Body body = GO.GetPart("Body") as Body;
+      if (body != null)
+      {
+		  this.ParentObject.FireEvent(Event.New("CommandForceUnequipObject", "BodyPartName", "Hands"));
+		  //body.GetBody().GetBodyPart("Right Hand").DefaultBehavior = GameObjectFactory.Factory.CreateObject("DefaultGraniteFist");
+		  body.GetBody().AddPartAt("GFist", "Hand", "Left Hand").DefaultBehavior = GameObjectFactory.Factory.CreateObject("DefaultGraniteFist");
+		  //body.GetBody().RemovePartByName("Hands");
+          List<BodyPart> Return = new List<BodyPart>();
+      }
+      return true;
+    }
+
+    public override bool Unmutate(GameObject GO)
+    {
+      Body body = GO.GetPart("Body") as Body;
+      if (body != null)
+      {
+		this.ParentObject.FireEvent(Event.New("CommandForceUnequipObject", "BodyPartName", "GFist"));
+		this.ParentObject.FireEvent(Event.New("CommandForceUnequipObject", "BodyPartName", "GFist"));
+        body.GetBody().RemovePartByName("GFist");
+        body.GetBody().RemovePartByName("GFist");
+		body.GetBody().AddPartAt("Fist", "Hand", "Right Hand");
+		body.GetBody().AddPartAt("Fist", "Hand", "Right Hand");
+      }
+      return true;
+    }
+  }
+}

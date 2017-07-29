@@ -1,0 +1,161 @@
+using System;
+using System.Collections.Generic;
+using XRL.Rules;
+using XRL.UI;
+using XRL.Core;
+using XRL.World.Parts.Effects;
+using XRL.World.AI.GoalHandlers;
+
+namespace XRL.World.Parts.Skill
+{
+    [Serializable]
+    internal class Fistfighting_Active_Jabcross : BaseSkill
+    {
+        public Guid ActivatedAbilityID = Guid.Empty;
+        public ActivatedAbilityEntry Ability;
+
+        public Fistfighting_Active_Jabcross()
+        {
+            this.Name = "Fistfighting_Active_Jabcross";
+            this.DisplayName = "Jab-Cross-Hook";
+        }
+
+        public override void Register(GameObject Object)
+        {
+            Object.RegisterPartEvent((IPart)this, "CommandJabcross");
+            Object.RegisterPartEvent((IPart)this, "AIGetOffensiveMutationList");
+        }
+
+        public bool MarkJC(Cell cell)
+        {
+            if (!cell.HasObjectWithPart("Combat"))
+                return false;
+
+            GameObject gameObject = cell.GetObjectsWithPart("Combat")[0];
+            if (gameObject.pBrain != null)
+                gameObject.pBrain.AdjustFeeling(this.ParentObject, -75);
+
+            int Difficulty = 15 + this.ParentObject.GetStatModifier("Strength", 0);
+            if (Stat.Random(1, 20) + gameObject.GetStatModifier("Agility", 0) > Difficulty)
+            {
+                if (gameObject.IsVisible())
+                    gameObject.ParticleText("*resisted");
+                if (this.ParentObject.IsPlayer())
+                {
+                    IPart.AddPlayerMessage(gameObject.The + gameObject.DisplayName + " resists your sweep.");
+                }
+                else if (gameObject.IsPlayer())
+                {
+                    IPart.AddPlayerMessage("You resist" + gameObject.The + gameObject.DisplayName + "'s sweep.");
+                }
+            }
+            else
+            {
+                gameObject.ApplyEffect((Effect)new Prone());
+            }
+
+            return true;
+        }
+
+        public List<Cell> GetTargetCells(Cell Target)
+        {
+            List<Cell> TargetCells = new List<Cell>(3);
+            TargetCells.Add(Target);
+
+            //Next add the cells next to it.
+            String[] OtherDirs = Directions.GetOrthogonalDirections((this.ParentObject.GetPart("Physics") as Physics).CurrentCell.GetDirectionFromCell(Target));
+            for (int count = 0; count < OtherDirs.Length; count++)
+            {
+                TargetCells.Add(Target.GetCellFromDirection(OtherDirs[count]));
+            }
+
+            return TargetCells;
+        }
+
+        public override bool FireEvent(Event E)
+        {
+            if (E.ID == "AIGetOffensiveMutationList")
+            {
+                int Distance = (int)E.GetParameter("Distance");
+                GameObject Target = E.GetParameter("Target") as GameObject;
+                List<AICommandList> Commands = (List<AICommandList>)E.GetParameter("List");
+                try
+                {
+                    if (this.Ability != null && this.Ability.Cooldown <= 0 && Distance == 1 && !Target.HasEffect("Prone"))
+                    {
+                        //Basically we want to only use it if there are a majority of enemies in the target range.
+                        int ShouldAttack = 0;
+                        List<Cell> CheckCells = GetTargetCells((Target.GetPart("Physics") as XRL.World.Parts.Physics).CurrentCell);
+                        for (int count = 0; count < CheckCells.Count; count++)
+                        {
+                            Cell TargetCell = CheckCells[count];
+                            if (TargetCell.HasObjectWithPart("Combat"))
+                            {
+                                if (this.ParentObject.pBrain.IsHostileTowards(TargetCell.GetObjectsWithPart("Combat")[0]))
+                                    ShouldAttack++;
+                                else
+                                    ShouldAttack--;
+
+                            }
+
+                        }
+                        if (ShouldAttack > 0)
+                            Commands.Add(new AICommandList("CommandJabcross", 1));
+                    }
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    XRLCore.LogError("FistfightingJabcrossAI", ex);
+                }
+            }
+            if (E.ID == "CommandJabcross")
+            {
+                if ((this.ParentObject.GetPart("Body") as Body).GetPrimaryWeaponOfType("Cudgel") == null)
+                {
+                    if (this.ParentObject.IsPlayer())
+                        Popup.Show("You need a Cudgel in hand to sweep people over.");
+                    return true;
+                }
+                List<Cell> TargetCells = GetTargetCells(this.PickDirection());
+                if (this.ParentObject.IsPlayer())
+                {
+                    IPart.AddPlayerMessage("You swing your cudgel low!");
+                    
+                }
+                else
+                {
+                    IPart.AddPlayerMessage(this.ParentObject.The + this.ParentObject.DisplayName + " swings their cudgel low!");
+                }
+                for (int count = 0; count < TargetCells.Count; count++)
+                {
+                    MarkJC(TargetCells[count]);
+                }
+                this.ParentObject.UseEnergy(1000);
+                this.Ability.Cooldown = 100;
+            }
+
+            return base.FireEvent(E);
+        }
+
+        public override bool AddSkill(GameObject GO)
+        {
+            ActivatedAbilities part = GO.GetPart("ActivatedAbilities") as ActivatedAbilities;
+            if (part != null)
+            {
+                this.ActivatedAbilityID = part.AddAbility("Prepare Jab-Cross-Hook", "CommandJabcross", "Skill", -1, false, false, "Sweep your ears wide and low, knocking enemies to and fro.", "-");
+                this.Ability = part.AbilityByGuid[this.ActivatedAbilityID];
+            }
+            return true;
+        }
+
+        public override bool RemoveSkill(GameObject GO)
+        {
+            if (this.ActivatedAbilityID != Guid.Empty)
+            {
+                (GO.GetPart("ActivatedAbilities") as ActivatedAbilities).RemoveAbility(this.ActivatedAbilityID);
+            }
+            return true;
+        }
+    }
+}

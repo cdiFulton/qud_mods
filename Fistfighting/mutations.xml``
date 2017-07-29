@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mutations>
+  <category Name="Physical">
+    <mutation Name="Granite Fists" Cost="3" MaxSelected="1" Class="Bottweiser_GraniteFists" Exclusions="Freezing Hands,Burrowing Claws,Flaming Hands" Code="gf"></mutation>
+	<mutation Name="Flaming Hands" Exclusions="Freezing Hands,Burrowing Claws,Granite Fists" Load="Merge"></mutation>
+	<mutation Name="Freezing Hands" Exclusions="Burrowing Claws,Flaming Hands,Granite Fists" Load="Merge"></mutation>
+	<mutation Name="Burrowing Claws" Exclusions="Freezing Hands,Flaming Hands,Granite Fists" Load="Merge"></mutation>
+ </category>
+</mutations>
