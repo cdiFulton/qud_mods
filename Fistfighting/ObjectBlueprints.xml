@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objects>
-	<object Name="DefaultGraniteFist" Inherits="NaturalWeapon" Load="Merge">
-		<part Name="Render" DisplayName="Granite Fist"></part>
-		<part Name="MeleeWeapon" RenderString="?" PenBonus="0" MaxStrengthBonus="999" BaseDamage="1d2-1" Skill="Fistfighting" Stat="Strength"></part>
-		<tag Name="BaseObject" Value="*noinherit"></tag>       
+	<object Name="DefaultFist" Inherits="NaturalWeapon" Load="Merge">
+		<part Name="Render" DisplayName="fist"></part>
+		<part Name="MeleeWeapon" RenderString="?" MaxStrengthBonus="1000" BaseDamage="1d2-1" Skill="Fistfighting" Stat="Strength"></part>
+		<tag Name="BaseObject" Value="*noinherit"></tag>
 	</object>
-	<object Name="Granite Hands" Inherits="Armor">
-	<part Name="NoDamage"></part>
+	<object Name="Granite Hands" Inherits="Armor" Load="Merge">
+		<part Name="NoDamage"></part>
 		<part Name="Armor" AV="0" DV="0" RF="0" WornOn="Hands"></part>
 		<part Name="Render" DisplayName="&amp;KGranite Hands" RenderString="]" Tile="items/sw_flaminghands.bmp" TileColor="&amp;R" DetailColor="W"></part>
 		<part Name="Commerce" Value="0"></part>

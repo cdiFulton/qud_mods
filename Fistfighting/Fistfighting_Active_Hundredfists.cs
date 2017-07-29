@@ -14,7 +14,7 @@ namespace XRL.World.Parts.Skill
 		public Guid ActivatedAbilityID = Guid.Empty;
 		public ActivatedAbilityEntry ActivatedAbility;
 
-		public Pistol_EmptyTheClips()
+		public Fistfighting_Hundredfists()
 		{
 			this.Name = "Fistfighting_Hundredfists";
 			this.DisplayName = "Hundred Fists";

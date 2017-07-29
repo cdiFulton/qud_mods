@@ -4,6 +4,8 @@ using XRL.Core;
 using XRL.Messages;
 using XRL.Rules;
 using XRL.UI;
+using XRL.World.AI.GoalHandlers;
+using XRL.World.Parts.Effects;
 
 namespace XRL.World.Parts.Skill
 {
@@ -18,20 +20,29 @@ namespace XRL.World.Parts.Skill
 
         public override void Register(GameObject Object)
         {
+			
 			Object.RegisterPartEvent((IPart) this, "AttackerRollMeleeToHit");
 			Object.RegisterPartEvent((IPart) this, "GetAttackerHitDice");
 			Object.RegisterPartEvent((IPart) this, "DealDamage");
+			
         }
 
         public override bool FireEvent(Event E)
         {
+			
 			// Get our bonuses to penetration
             if (E.ID == "AttackerRollMeleeToHit") {
 				GameObject weapon = E.GetParameter("Weapon") as GameObject;
-				// if (weapon != null && weapon.HasPart("MeleeWeapon") && (weapon.GetPart("MeleeWeapon") as MeleeWeapon).Skill == "Fist")
+				//if (weapon != null && weapon.HasPart("MeleeWeapon") && (weapon.GetPart("MeleeWeapon") as MeleeWeapon).Skill == "Fistfighting")
 				int pen_bonus = 0;
 				MessageQueue.AddPlayerMessage("You attack with a " + E.GetParameter("Skill") as string);
 				
+				if (weapon != null && weapon.HasPart("MeleeWeapon") && (weapon.GetPart("MeleeWeapon") as MeleeWeapon).Skill == "Fistfighting") 
+				{
+					MessageQueue.AddPlayerMessage("Er, I mean a ..." );
+				}
+					
+					
 				if (this.ParentObject.HasPart("Fistfighting_Pugilist")) {
 					pen_bonus += 2;
 				}
@@ -56,14 +67,14 @@ namespace XRL.World.Parts.Skill
 			// Get our to-hit bonuses
 			if (E.ID == "AttackerRollMeleeToHit") {
 				GameObject weapon = E.GetParameter("Weapon") as GameObject;
-				// if (weapon != null && weapon.HasPart("MeleeWeapon") && (weapon.GetPart("MeleeWeapon") as MeleeWeapon).Skill == "Fist")
+				// if (weapon != null && weapon.HasPart("MeleeWeapon") && (weapon.GetPart("MeleeWeapon") as MeleeWeapon).Skill == "Fistfighting")
 				int hit_bonus = 0;				
 				
 				if (this.ParentObject.HasPart("Fistfighting_Pugilist")) {
 					hit_bonus += 2;
 				}
 				
-				E.AddParameter("Result", (int) E.GetParameter("Result") + num);
+				E.AddParameter("Result", (int) E.GetParameter("Result") + hit_bonus);
 				
 				MessageQueue.AddPlayerMessage("hit bonus: " + hit_bonus as string);
 			}
@@ -71,7 +82,7 @@ namespace XRL.World.Parts.Skill
 			// Get our damage bonuses and apply grapple
 			if (E.ID == "DealDamage") {
 				GameObject weapon = E.GetParameter("Weapon") as GameObject;
-				// if (weapon != null && weapon.HasPart("MeleeWeapon") && (weapon.GetPart("MeleeWeapon") as MeleeWeapon).Skill == "Fist")
+				// if (weapon != null && weapon.HasPart("MeleeWeapon") && (weapon.GetPart("MeleeWeapon") as MeleeWeapon).Skill == "Fistfighting")
 				
 				Damage wpn_dmg = E.GetParameter("Damage") as Damage;
 				
@@ -105,7 +116,9 @@ namespace XRL.World.Parts.Skill
 					// E.target.apply_grapple()
 				}
 			}
+			
+			return base.FireEvent(E);
         }
-
+		
     }
 }

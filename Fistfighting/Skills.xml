@@ -4,16 +4,16 @@
     <power Name="Pugilist" Cost="0" Attribute="Strength" Minimum="0" Class="Fistfighting_Pugilist" 
 		Description="Your fist attacks have +2 to-hit, +2 penetration, and +2 damage, plus damage and to-hit equal to your gloves' AV and DV respectively (if positive)."></power>
 		
-	<!--<power Name="Balanced Combatant" Cost="100" Attribute="Strength" Minimum="19" Class="Fistfighting_Balancedcombatant"
+	<power Name="Balanced Combatant" Cost="100" Attribute="Strength" Minimum="19" Class="Fistfighting_Balancedcombatant"
 		Description="While unarmed, you have +1 DV and +5 quickness, and your fist attacks have +1 damage and +1 penetration."></power>
 		
-	<power Name="Jab-Cross" Cost="50" Attribute="Agility" Minimum="19" Class="Fistfighting_Active_Jabcross" 
+	<!--<power Name="Jab-Cross" Cost="50" Attribute="Agility" Minimum="19" Class="Fistfighting_Active_Jabcross" 
 		Description="Activated; Cooldown 50.
 	Make two fist attacks against an adjacent enemy. If both attacks penetrate, the enemy takes 3d4 extra damage and is stunned for 2d2 turns."></power>
 		
 	<power Name="Jump Kick" Cost="100" Attribute="Strength" Minimum="21" Class="Fistfighting_Active_Jumpkick" 
 		Description="Activated; Cooldown 10.
-		You leap one square and attack an enemy, adding damage and to-hit equal to double your boots' AV and DV respectively (if positive). This counts as a fist attack."></power>
+		You leap one square and attack an enemy, adding damage and to-hit equal to double your boots' AV and DV respectively (if positive). This counts as a fist attack."></power>-->
 		
 	<power Name="Grapple" Cost="150" Attribute="Agility" Minimum="21" Class="Fistfighting_Grapple" 
 		Description="Your fists attacks have +1 damage and +1 penetration. Adjacent enemies that you've damaged with your fists cannot move or use abilities."></power>
@@ -29,6 +29,6 @@
 		
 	<power Name="Hundred Fists" Cost="300" Attribute="Agility" Minimum="27" Class="Fistfighting_Hundredfists" 
 		Description="Activated; Cooldown 100.
-		For the next 5 rounds, the energy cost of making fist attacks is reduced from 1000 to 100."></power>-->
+		For the next 5 rounds, the energy cost of making fist attacks is reduced from 1000 to 100."></power>
   </skill>
 </skills>

@@ -4,6 +4,8 @@ using XRL.Core;
 using XRL.Messages;
 using XRL.Rules;
 using XRL.UI;
+using XRL.World.AI.GoalHandlers;
+using XRL.World.Parts.Effects;
 
 namespace XRL.World.Parts.Skill
 {
@@ -23,12 +25,14 @@ namespace XRL.World.Parts.Skill
 		{
 			GO.Statistics["Speed"].Bonus += 5;
 			GO.Statistics["DV"].BaseValue += 1;
+			return true;
 		}
 		
 		public override bool RemoveSkill(GameObject GO) 
 		{
 			GO.Statistics["Speed"].Bonus -= 5;
 			GO.Statistics["DV"].BaseValue -= 1;
+			return true;
 		}
     }
 }

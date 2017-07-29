@@ -25,7 +25,7 @@ namespace XRL.World.Parts.Effects
 
     public override string GetDescription()
     {
-      return "Well, at least 50 or so.";
+      return "Hundred Fists";
     }
 
     public override bool Apply(GameObject Object)
@@ -46,6 +46,7 @@ namespace XRL.World.Parts.Effects
       Object.RegisterEffectEvent((Effect) this, "EnteredCell");
       //Object.RegisterEffectEvent((Effect) this, "FiredMissileWeapon");
 	  // Find one for melee attack
+	  // Actually, we'll probably do this by using the "SpendEnergy" hook
       Object.RegisterEffectEvent((Effect) this, "BeforeTakeAction");
     }
 

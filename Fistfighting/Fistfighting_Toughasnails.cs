@@ -18,15 +18,16 @@ namespace XRL.World.Parts.Skill
 		// This is a passive, so its main effect is existing and being checked by the
 		// main skill Pugilist		
 		
-		// Add the AV
 		public override bool AddSkill(GameObject GO) 
 		{
 			GO.Statistics["AV"].BaseValue += 1;
+			return true;
 		}
 		
 		public override bool RemoveSkill(GameObject GO) 
 		{
 			GO.Statistics["AV"].BaseValue -= 1;
+			return true;
 		}
     }
 }
