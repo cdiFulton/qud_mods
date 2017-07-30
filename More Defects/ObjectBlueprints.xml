@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects>
+  <object Name="Hot Feet" Inherits="Armor">
+    <part Name="NoDamage"></part>
+    <part Name="Armor" AV="0" DV="2" RF="0" WornOn="Feet"></part>
+    <part Name="Render" DisplayName="&amp;rH&amp;Yo&amp;rt &amp;YF&amp;re&amp;Ye&amp;rt" RenderString="]" Tile="items/sw_flaminghands.bmp" TileColor="&amp;R" DetailColor="W"></part>
+    <part Name="Commerce" Value="0"></part>
+    <part Name="Description" Short="Little firecrackers seem to go off under your feet with even the slightest change of weight distribution."></part>
+    <part Name="Physics" Weight="0" IsReal="false"></part>
+    <part Name="Cursed"></part>
+    <part Name="NoBreak"></part>
+    <property Name="Natural" Value="1"></property>
+    <tag Name="NoSparkingQuest"></tag>
+  </object>
+</objects>
