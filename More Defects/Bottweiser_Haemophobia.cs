@@ -52,10 +52,10 @@ namespace XRL.World.Parts.Mutation
 			if (E.ID == "BeginEquip") 
 			{
 				GameObject item = E.GetParameter("Object") as GameObject;
-				if (item.HasEffect("Bloody"))
+				if (item.HasEffect("bloody"))
 				{
 					if (this.IsPlayer()) return true;
-						Popup.Show(parameter.DisplayName + " is covered in blood! You can't bring yourself to touch it!", true); // 
+						Popup.Show(item.DisplayName + " is covered in blood! You can't bring yourself to touch it!", true); // 
 					return false;
 				}
 			}
@@ -66,13 +66,12 @@ namespace XRL.World.Parts.Mutation
 				// Don't try to check objects in the current tile if on the world map
 				if (!(this.ParentObject.GetPart("Physics") as Physics).CurrentCell.ParentZone.IsWorldMap())
 				{	
-					Physics current_cell = this.ParentObject.GetPart("Physics") as Physics;
-					foreach (GameObject gameObject in part1.CurrentCell.GetObjectsInCell())
+					foreach (GameObject gameObject in (this.ParentObject.GetPart("Physics") as Physics).CurrentCell.GetObjectsInCell())
 					{
-						if gameObject.HasEffect("Bloody") 
+						if (gameObject.HasEffect("Bloody"))
 						{
 							// Apply 4-turn fear with very high dice so it can't (shouldn't) be resisted 
-							ApplyFearToObject(100, 4, this.ParentObject, this.ParentObject);
+							Fear.ApplyFearToObject("d100", 4, this.ParentObject, this.ParentObject);
 						}
 					}
 				}

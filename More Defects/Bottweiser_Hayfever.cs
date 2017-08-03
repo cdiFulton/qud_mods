@@ -18,7 +18,7 @@ namespace XRL.World.Parts.Mutation
 	[Serializable]
 	internal class Bottweiser_Hayfever : BaseMutation
 	{	
-		public Bottweiser_Hotfeet()
+		public Bottweiser_Hayfever	()
 		{
 			this.Name = "Bottweiser_Hayfever";
 			this.DisplayName = "Hay Fever (&rD&y)";
@@ -44,11 +44,10 @@ namespace XRL.World.Parts.Mutation
 			return string.Empty;
 		}
 		
-		// Look at GameObject.FlingBlood(), Flaming hands
 		public override bool FireEvent(Event E)
 		{
-			// Check Wings to see whether your're outdoors or not
-			else if (E.ID == "EndTurn") 
+			// Look at Wings for the check to see whether your're outdoors or not
+			if (E.ID == "EndTurn") 
 			{
 				
 				return true;
