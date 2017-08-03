@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mutations>
 	<category Name="PhysicalDefects" Load="Merge">
-		<mutation Name="Hay Fever" Cost="-4" MaxSelected="1" Class="Bottweiser_Hayfever" Exclusions="" Code="cm"></mutation> <!-- While outdoors, randomly get awful effects: Myopia, sneezing (alerts enemies), itchy (small chance to stun) -->
+		<mutation Name="Hay Fever" Cost="-4" MaxSelected="1" Class="Bottweiser_Hayfever" Exclusions="" Code="cm"></mutation> <!-- While outdoors, randomly get awful effects: watery eyes(reduced vision), sneezing (alerts enemies), itchy (willpower save vs stun, -willpower), hives (-ego), runny nose(-agility?) -->
 		<mutation Name="Hot Feet" Cost="-2" MaxSelected="1" Class="Bottweiser_Hotfeet" Exclusions="" Code="cn"></mutation> <!-- You were never very good at dancing... -->
 	</category>
 	<category Name="MentalDefects" Load="Merge">
 		<mutation Name="Dimwitted" Cost="-3" MaxSelected="1" Class="Bottweiser_Dimwitted" Exclusions="" Code="eh"></mutation> <!-- -10 int -->
-		<mutation Name="Hemophobia" Cost="-4" MaxSelected="1" Class="Bottweiser_Hemophobia" Exclusions="" Code="ei"></mutation> <!-- obvious -->
+		<mutation Name="Haemophobia" Cost="-3" MaxSelected="1" Class="Bottweiser_Haemophobia" Exclusions="" Code="ei"></mutation> <!-- can't enter tiles with blood, can't pick up/equip bloody, dreadroot fear when blood -->
 	</category>
 </mutations>

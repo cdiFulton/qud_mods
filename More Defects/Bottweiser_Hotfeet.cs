@@ -47,7 +47,7 @@ namespace XRL.World.Parts.Mutation
 			return string.Empty;
 		}
 		
-		
+		// Look at GameObject.FlingBlood(), Flaming hands
 		public override bool FireEvent(Event E)
 		{
 			if (E.ID == "BeginEquip") 
